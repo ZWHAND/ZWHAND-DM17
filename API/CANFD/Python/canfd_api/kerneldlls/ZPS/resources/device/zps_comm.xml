@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<device>
+  <localsource>
+  </localsource>
+  <connect>
+   <links LinkPiror="MULTI_NET;USB" alias="MULTI_NET=TCP">
+     <link type="USB" Pid="0x0010" Vid="0x3068">
+        <config id="io1" ch_id="ch0" OutEndPoint="0x01" InEndPoint="0x81" />
+		<config id="io2"  ch_id="ch1" type="IN" InEndPoint="0x82"  delay_time="200" tran_size="512" buff_size="16"/>
+     </link>
+     <link DefaultComm="tcp1"  type="MULTI_NET" followDefault="IP" >
+		<link  id="tcp1"  ch_id="ch0" IP="192.168.10.110"  Port="5025"  type="ALL"/>
+		<link  id="tcp2"  ch_id="ch1" IP="192.168.10.110"  Port="5026" type="IN"  buff_size="16"/>
+	 </link>
+   </links>
+  </connect>
+
+
+  <datachannel>
+    <ch id="ch0" type="NORMAL" />
+    <ch id="ch1" type="LISTEN"   Listener="Listener1" />
+  </datachannel>
+
+<listeners>
+	<Listen id="Listener1" key="func_code" parse_var="UINT32 func_code,ZBUFF Data" parse="code=func_code;data=Data" parse_type="ubus">
+	   <item key="33" catch="Data" asyn="1">
+	   		<log text="IN FUNC_CODE 33, show Data： ${Data}" level="info"/>
+			<func name="LogBin" param="Data" />
+			<!-- <log text="IN FUNC_CODE 33, show Data： ${Data}" level="info"/> -->
+	   </item>
+	   <item key="17" catch="Data" asyn="1">
+			<!-- <ctr id="heartbeat" event="heartbeat_update" /> -->
+	   		<!-- <log text="IN FUNC_CODE 17, show Data： ${Data}" level="info"/> -->
+			<!-- <func name="LogBin" param="Data" /> -->
+			<!-- <log text="IN FUNC_CODE 33, show Data： ${Data}" level="info"/> -->
+	   </item>
+	   	   <item key="18" catch="Data,&amp;canfdprocess" asyn="1" comment="报文数据">
+		    <!-- <func name="ZPS.ProcessData" param="Data"/>  -->
+			<code statement="canfdprocess.StartProcessData(Data)"/>
+			<!-- <log text="IN FUNC_CODE 33, show Data： ${Data}" level="info"/> -->
+	   </item>
+	 </Listen>
+</listeners>
+
+  <!-- <cmds Eof="0x0d;0x0a"> -->
+  <cmds  Eof="0x0a" defautincludepath="#@APP_RES#/device/" include="sys_cmd.xml;can_cmd.xml;dio_cmd.xml;aio_cmd.xml;send_cmd.xml;async_cmd.xml">
+    <cmd id="IsOnline" param="STRING&amp;:A" send_str="*IDN?"  recv_str="{A}" ch="ch0" silence="1"/>
+    <cmd id="GetRegValue_int" param="STRING:A,INT64&amp;:value" send_str="reg? {A}"  recv_str="{value}" ch="ch0" />
+    <cmd id="SetRegValue_int" param="STRING:A,INT64:value" send_str="reg {A},{value}" ch="ch0" />
+	<!--RC业务-->
+  </cmds>
+  
+  <heartbeat cmd="IsOnline" args="Arg" period="3000" valid_time="2000" valid_delay_time="100"/>
+  <funcs>
+  </funcs>
+	
+  <vars>
+    <var id="Arg" vtype="STRING" value="world!" def="hello!"  connect="chnum=1" comment="心跳使用" />
+	<!-- <var id="multi_reader" vtype="CMultiStructReader"  connect="__LinkData=DataMng.{CanfdDataSet}" caption="" /> -->
+  </vars>
+  
+  <events>
+    <sub_event>
+      <event event="DEVICE_OPEN">
+        <log text="ZPS 连接成功" level="info" />
+      </event>
+    </sub_event>
+  </events>
+</device>

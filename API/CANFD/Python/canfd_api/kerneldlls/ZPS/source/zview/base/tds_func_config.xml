@@ -1,0 +1,29 @@
+<base_func_config>
+  <groups>
+    <!--<group path="base"            caption="基础命令"/>-->
+    <group path="base"       caption="基础命令"/>
+    <group path="process"    caption="流程控制"/>
+    <group path="math"       caption="数学运算"/>
+    <group path="string"     caption="文本处理"/>
+    <group path="data"       caption="数据处理"/>
+  </groups>
+  <funcs>
+    <getsystemparam    caption="GetSystemParam"     path="data" tips=""   descibe="延时/等待：阻塞测试流程，等待用户指定时长。">
+      <item id="time" vtype="STRING" type="combobox" editable="true" data_type="INT32" item_type="INT32" autoUpdateOption="true" caption="时间" value="1000"  def="1000" option="ENV($LocalVar:INT32)" descibe="时间【IN】：休眠时长，数值类型&#x000A;支持INT32变量或者常量"/>
+      <item id="unit"  vtype="STRING" type="combobox" caption="单位" option="s;ms" def="ms" value="ms" descibe="单位【IN】：休眠时长的单位，枚举值&#x000A;s：秒，ms：毫秒"/>
+    </getsystemparam>
+   <uploadTestItemResult    caption="UpLoadTestItem"     path="data" tips=""   descibe="上传测试结果">
+     <item id="sn" vtype="STRING" type="combobox" editable="true" data_type="STRING" item_type="STRING" autoUpdateOption="true" caption="SN" value="10086112233"  def="10086112233" option="ENV($LocalVar:STRING)" descibe="SN【IN】：SN编号，数值类型&#x000A;支持STRING变量或者常量"/>
+     <item id="sendComment" vtype="STRING" type="combobox" editable="true" data_type="STRING" item_type="STRING" autoUpdateOption="true" caption="上传信息" value="key=value"  def="key=value" option="ENV($LocalVar:STRING)" descibe="上传信息【IN】：上传信息，数值类型&#x000A;支持STRING变量或者常量"/>
+     <item id="test_result" vtype="STRING" type="combobox" editable="true" data_type="STRING" item_type="STRING" autoUpdateOption="true" caption="测试结果" value="Pass"  def="Pass" option="ENV($LocalVar:STRING)" descibe="测试结果【IN】：测试结果，数值类型&#x000A;支持STRING变量或者常量"/>
+     <item id="upload_result" vtype="STRING" type="combobox" editable="true" data_type="INT32" item_type="INT32" autoUpdateOption="true" caption="上传结果" value="null"  def="null" option="ENV($LocalVar:INT32)" descibe="上传结果【IN】：上传结果，数值类型&#x000A;支持INT32变量或者常量"/>
+     <item id="error" vtype="STRING" type="combobox" editable="true" data_type="STRING" item_type="STRING" autoUpdateOption="true" caption="错误反馈" value="result"  def="result" option="ENV($LocalVar:STRING)" descibe="错误反馈【IN】：错误反馈，数值类型&#x000A;支持STRING变量或者常量"/>
+    </uploadTestItemResult>
+    <uploadTestItemStatus    caption="SetTestStatus"     path="data" tips=""   descibe="设置测试状态">
+      <item id="sn" vtype="STRING" type="combobox" editable="true" data_type="STRING" item_type="STRING" autoUpdateOption="true" caption="SN" value="10086112233"  def="10086112233" option="ENV($LocalVar:STRING)" descibe="SN【IN】：SN编号，数值类型&#x000A;支持STRING变量或者常量"/>
+      <item id="status_param" vtype="STRING" type="combobox" editable="true" data_type="STRING" item_type="STRING" autoUpdateOption="true" caption="状态" value="Pass"  def="Pass" option="ENV($LocalVar:STRING)" descibe="状态【IN】：状态，数值类型&#x000A;支持STRING变量或者常量"/>     
+      <item id="upload_result" vtype="STRING" type="combobox" editable="true" data_type="INT32" item_type="INT32" autoUpdateOption="true" caption="上传结果" value="null"  def="null" option="ENV($LocalVar:INT32)" descibe="结果【IN】：上传结果，数值类型&#x000A;支持INT32变量或者常量"/>
+      <item id="error" vtype="STRING" type="combobox" editable="true" data_type="STRING" item_type="STRING" autoUpdateOption="true" caption="错误反馈" value="result"  def="result" option="ENV($LocalVar:STRING)" descibe="错误反馈【IN】：错误反馈，数值类型&#x000A;支持STRING变量或者常量"/>
+    </uploadTestItemStatus>
+  </funcs>
+</base_func_config>

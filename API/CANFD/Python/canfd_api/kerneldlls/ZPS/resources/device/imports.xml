@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<import>
+  <import name="z_comm" />
+  <include path="#@APP_RES#/device/zps_type.xml" />  
+  <import name="zps_device" as="zpsdevice" />
+  <import name="zps_function" as="zps" />
+
+  <include path="#@APP_RES#/device/devicevartype.xml" />
+</import>

@@ -1,0 +1,19 @@
+cmake_minimum_required(VERSION 3.18 FATAL_ERROR)
+
+project(ZViewRes)
+set(CMAKE_FOLDER "ZView/Resources")
+
+file(GLOB_RECURSE ZVIEW_RESOURCE_FILES *.*)
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX "Files" FILES ${ZVIEW_RESOURCE_FILES})
+
+add_custom_target(
+  ${PROJECT_NAME} ALL
+  COMMENT "ZView Res Build"
+  DEPENDS ${ZVIEW_RESOURCE_FILES}
+)
+target_sources(
+  ${PROJECT_NAME} PRIVATE ${ZVIEW_RESOURCE_FILES}
+)
+
+define_property(TARGET PROPERTY SOURCE_ROOT BRIEF_DOCS "resource root dir" FULL_DOCS "xxx")
+set_target_properties(${PROJECT_NAME} PROPERTIES SOURCE_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
